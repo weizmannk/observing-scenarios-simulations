@@ -1,4 +1,4 @@
-RUNS = O3 O4a O4 O5
+RUNS = O5a O5b O5c
 POPS = farah
 FILENAMES = events events.xml.gz events.sqlite injections.dat coincs.dat
 
@@ -34,11 +34,15 @@ O4-psds = \
 	--L1 aligo_O4low.txt \
 	--V1 O4_Virgo_78.txt \
 	--K1 kagra_3Mpc.txt
-O5-psds = \
-	--H1 AplusDesign.txt \
-	--L1 AplusDesign.txt \
-	--V1 avirgo_O5low_NEW.txt \
-	--K1 kagra_128Mpc.txt
+O5a-psds = \
+	--H1 O5StrainCurves_freqabc.txt \
+	--L1 O5StrainCurves_freqabc.txt
+O5b-psds = \
+	--H1 O5StrainCurves_freqabc.txt \
+	--L1 O5StrainCurves_freqabc.txt
+O5c-psds = \
+	--H1 O5StrainCurves_freqabc.txt \
+	--L1 O5StrainCurves_freqabc.txt
 O6-psds = \
 	--H1 AplusDesign.txt \
 	--L1 AplusDesign.txt \
@@ -52,7 +56,9 @@ O6-psds = \
 #
 
 %.txt:
-	curl -L https://dcc.ligo.org/LIGO-T2200043-v3/public/$(@F) > $@
+	curl -L https://dcc.ligo.org/LIGO-T2500310-v2/public/$(@F) > $@
+	
+# 	curl -L https://dcc.ligo.org/LIGO-T2200043-v3/public/$(@F) > $@
 
 
 #
@@ -62,7 +68,7 @@ O6-psds = \
 .SECONDEXPANSION:
 psd_files = $(sort $(filter-out --%,$(value $(1)-psds)))
 runs/%/psds.xml: $$(call psd_files,%)
-	mkdir -p $(@D) && scripts/pack-psds.py -o $@ $(value $*-psds)
+	mkdir -p $(@D) && scripts/pack-psds.py -o $@ --config $* $(value $*-psds)
 
 
 #
@@ -70,15 +76,16 @@ runs/%/psds.xml: $$(call psd_files,%)
 # FIXME: this document must be public!
 #
 
-O1O2O3all_mass_h_iid_mag_iid_tilt_powerlaw_redshift_maxP_events_all.h5:
-	curl -OL https://dcc.ligo.org/LIGO-T2100512/public/O1O2O3all_mass_h_iid_mag_iid_tilt_powerlaw_redshift_maxP_events_all.h5
+
+GWTC4_BrokenPowerLawTwoPeaks_baseline5_population.hdf5:
+	curl -OL https://dcc.ligo.org/public/0203/T2500311/004/GWTC4_BrokenPowerLawTwoPeaks_baseline5_population.hdf5
 
 
 #
 # Convert the Farah samples to the format needed by bayestar-inject.
 #
 
-farah.h5: O1O2O3all_mass_h_iid_mag_iid_tilt_powerlaw_redshift_maxP_events_all.h5 scripts/farah.py
+farah.h5: GWTC4_BrokenPowerLawTwoPeaks_baseline5_population.hdf5 scripts/farah.py
 	scripts/farah.py $< $@
 
 
