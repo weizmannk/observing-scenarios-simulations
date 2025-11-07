@@ -9,7 +9,7 @@ dependencies = [
     "astroplan",
     "scipy",
     "seaborn",
-    "ligo.skymap>=1.0.6",
+    "ligo.skymap>=2.4.1",
     "scikits.bootstrap>=1.1.0",
     "ipykernel",
     "ipython",
