@@ -2,7 +2,7 @@
 """Pack ASCII injection files into a psd.xml file."""
 
 import os
-from argparse import SUPPRESS,  FileType
+from argparse import SUPPRESS, FileType
 
 import glue.ligolw.utils
 import lal
@@ -34,7 +34,6 @@ config_columns = {
     "O5b": 2,  # Column 2 = O5bStrain
     "O5c": 3,  # Column 3 = O5cStrain
 }
-
 
 
 # Command line interface

@@ -16,4 +16,6 @@ dependencies = [
     "ipywidgets",
     "gracedb-sdk",
     "lxml",
+    "lscsoft-glue>=3.0.1",
+    "igwn-ligolw",
 ]
