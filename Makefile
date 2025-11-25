@@ -35,14 +35,14 @@ O4-psds = \
 	--V1 O4_Virgo_78.txt \
 	--K1 kagra_3Mpc.txt
 O5a-psds = \
-	--H1 O5StrainCurves_freqabc.txt --H1-column 1 \
-	--L1 O5StrainCurves_freqabc.txt --L1-column 1
+	--H1 O5StrainCurves_freqabc.txt --H1-column O5aStrain \
+	--L1 O5StrainCurves_freqabc.txt --L1-column O5aStrain
 O5b-psds = \
-	--H1 O5StrainCurves_freqabc.txt --H1-column 2 \
-	--L1 O5StrainCurves_freqabc.txt --L1-column 2
+	--H1 O5StrainCurves_freqabc.txt --H1-column O5bStrain \
+	--L1 O5StrainCurves_freqabc.txt --L1-column O5bStrain
 O5c-psds = \
-	--H1 O5StrainCurves_freqabc.txt --H1-column 3 \
-	--L1 O5StrainCurves_freqabc.txt --L1-column 3
+	--H1 O5StrainCurves_freqabc.txt --H1-column O5cStrain \
+	--L1 O5StrainCurves_freqabc.txt --L1-column O5cStrain
 O6-psds = \
 	--H1 AplusDesign.txt \
 	--L1 AplusDesign.txt \

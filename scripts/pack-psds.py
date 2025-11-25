@@ -11,20 +11,25 @@ import numpy as np
 from ligo.skymap.tool import ArgumentParser, register_to_xmldoc
 
 
-def read_multicolumn_txt_file(filepath, column):
+def read_multicolumn_txt_file(filepath, column_name):
     """
-    Read .txt file and extract specific column.
+    Read .txt file and extract specific column by name.
 
     Parameters:
         filepath: Path to the .txt file
-        column: Which column to read (1, 2, 3, etc.)
+        column_name: Column name (e.g., 'O5aStrain', 'O5bStrain', 'O5cStrain')
 
     Returns:
         Tuple: (frequency, asd_data)
     """
-    data = np.loadtxt(filepath, skiprows=1)
-    frequency = data[:, 0]
-    asd_data = data[:, column]
+    data = np.genfromtxt(filepath, names=True)
+
+    if column_name not in data.dtype.names:
+        raise ValueError(
+            f"Column '{column_name}' not found. Available: {', '.join(data.dtype.names)}"
+        )
+    frequency = data[data.dtype.names[0]]
+    asd_data = data[column_name]
     return frequency, asd_data
 
 
@@ -50,10 +55,10 @@ for name, long_name in zip(detector_names, detector_long_names):
     )
     parser.add_argument(
         f"--{name}-column",
-        metavar="N",
-        type=int,
+        metavar="COLUMN_NAME",
+        type=str,
         default=None,
-        help="Column number to read from {0} PSD file (1, 2, 3, etc.)".format(
+        help="Column name to read from {0} PSD file (e.g., O5aStrain)".format(
             long_name
         ),
     )
@@ -67,7 +72,7 @@ for name in detector_names:
         continue
 
     # Get column argument for this detector
-    column = getattr(args, name + "_column", None)
+    column = getattr(args, f"{name}_column", None)
 
     if column is not None:
         # Read specific column from multi-column file
