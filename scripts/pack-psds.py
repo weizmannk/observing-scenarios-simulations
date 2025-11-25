@@ -49,7 +49,7 @@ for name, long_name in zip(detector_names, detector_long_names):
         help="PSD function for {0} detector".format(long_name),
     )
     parser.add_argument(
-        "--" + name + "-column",
+        f"--{name}-column",
         metavar="N",
         type=int,
         default=None,
